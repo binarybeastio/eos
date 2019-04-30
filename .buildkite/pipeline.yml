@@ -62,7 +62,7 @@ steps:
 
   - label: ":darwin: [Darwin] Mojave Tests"
     command:
-      - "ssh -i ~/.ssh/localhost anka@localhost \"cd $WORKDIR && PATH=$PATH ./scripts/serial-test.sh /Network/NAS/MAC_FLEET/BUILDKITE/artifacts/10.14.4_6C_14G_40G-eosio-a1967910-7f39-44ea-8c80-fde40e5f8d90.tar.gz\""
+      - "ssh -i ~/.ssh/localhost anka@localhost \"cd $WORKDIR && PATH=$PATH ./scripts/serial-test.sh /Network/NAS/MAC_FLEET/BUILDKITE/artifacts/10.14.4_6C_14G_40G-eosio-a1967910-7f39-44ea-8c80-fde40e5f8d90.tar.gz\" || cd"
     artifact_paths:
       - "build/mongod.log"
       - "build/genesis.json"
