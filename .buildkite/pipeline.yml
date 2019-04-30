@@ -31,9 +31,7 @@ steps:
     plugins:
       chef/anka#v0.4.4:
         host-commands:
-          - "echo \"test\""
-          - "echo \"test2\""
-          - "buildkite-agent download artifact \"testing123\""  
+          - "pwd"  
         vm-name: $ANKA_MOJAVE_TEMPLATE
         vm-registry-tag: "${ANKA_TEMPLATE_TAG}::${MAC_TAG}"
         always-pull: true
