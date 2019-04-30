@@ -209,7 +209,7 @@ printf "\\n"
 
 
 export CPATH="${CPATH}:${PYTHON3PATH}/root/usr/include/python3.6m" # m on the end causes problems with boost finding python3
-if [ $PIN_COMPILER ]; then
+if [ "$BUILD_CLANG8" = "true" ]; then
    printf "Checking Clang 8 support...\\n"
    if [ ! -d $CLANG8_ROOT ] || [ $FORCE_BUILD ]; then
       printf "Installing Clang 8...\\n"
@@ -372,7 +372,7 @@ if [ $BUILD_MONGO ]; then
       && cd mongo-c-driver-$MONGO_C_DRIVER_VERSION \
       && mkdir -p cmake-build \
       && cd cmake-build \
-      && $CMAKE -DCMAKE_BUILD_TYPE=Release -DCMAKE_INSTALL_PREFIX=$PREFIX -DENABLE_BSON=ON -DENABLE_SSL=OPENSSL -DENABLE_AUTOMATIC_INIT_AND_CLEANUP=OFF -DENABLE_STATIC=ON -DENABLE_ICU=OFF $PINNED_TOOLCHAIN .. \
+      && $CMAKE -DCMAKE_BUILD_TYPE=Release -DCMAKE_INSTALL_PREFIX=$PREFIX -DENABLE_BSON=ON -DENABLE_SSL=OPENSSL -DENABLE_AUTOMATIC_INIT_AND_CLEANUP=OFF -DENABLE_STATIC=ON -DENABLE_ICU=OFF -DENABLE_SNAPPY=OFF $PINNED_TOOLCHAIN .. \
       && make -j"${JOBS}" \
       && make install \
       && cd ../.. \

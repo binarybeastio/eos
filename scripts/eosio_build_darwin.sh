@@ -227,7 +227,7 @@ if [ $BUILD_MONGO ]; then
       && cd mongo-c-driver-$MONGO_C_DRIVER_VERSION \
       && mkdir -p cmake-build \
       && cd cmake-build \
-      && $CMAKE -DCMAKE_BUILD_TYPE=Release -DCMAKE_INSTALL_PREFIX=$PREFIX -DENABLE_BSON=ON -DENABLE_SSL=DARWIN -DENABLE_AUTOMATIC_INIT_AND_CLEANUP=OFF -DENABLE_STATIC=ON -DENABLE_ICU=OFF -DENABLE_SASL=OFF .. \
+      && $CMAKE -DCMAKE_BUILD_TYPE=Release -DCMAKE_INSTALL_PREFIX=$PREFIX -DENABLE_BSON=ON -DENABLE_SSL=DARWIN -DENABLE_AUTOMATIC_INIT_AND_CLEANUP=OFF -DENABLE_STATIC=ON -DENABLE_ICU=OFF -DENABLE_SASL=OFF -DENABLE_SNAPPY=OFF .. \
       && make -j"${JOBS}" \
       && make install \
       && cd ../.. \
@@ -277,7 +277,7 @@ fi
 cd ..
 printf "\\n"
 
-if $PIN_COMPILER; then
+if [ "$BUILD_CLANG8" = "true" ]; then
    printf "Checking Clang 8 support...\\n"
    if [ ! -d $CLANG8_ROOT ] || [ $FORCE_BUILD ]; then
       printf "Installing Clang 8...\\n"
