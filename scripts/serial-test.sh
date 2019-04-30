@@ -5,7 +5,7 @@ PATH=$PATH:~/opt/mongodb/bin
 echo "[Extracting build directory]"
 [[ -z "${1}" ]] && tar -zxf build.tar.gz || tar -xzf $1
 echo "[Killing old MongoDB]"
-$(pgrep mongod | grep etc/mongod.conf | awk '{print $2}' | xargs kill -9) || true
+$(pgrep mongod | xargs kill -9) || true
 echo "[Starting MongoDB]"
 mongod --fork --dbpath ~/data/mongodb -f ~/etc/mongod.conf --logpath ~/var/log/mongodb/mongod.log
 cd ./build
