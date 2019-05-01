@@ -65,8 +65,7 @@ steps:
 
   - label: ":darwin: [Darwin] Mojave Tests"
     command:
-      - "cd $WORKDIR && tar -xzf /Network/NAS/MAC_FLEET/BUILDKITE/artifacts/10.14.4_6C_14G_40G-eosio-e65cbc54-7804-4c89-97a2-842a9c03c42a.tar.gz"
-      - "cd $WORKDIR/build && ctest -L nonparallelizable_tests --progress --output-on-failure -T Test"
+      - "./scripts/parallel-test.sh /Network/NAS/MAC_FLEET/BUILDKITE/artifacts/10.14.4_6C_14G_40G-eosio-e65cbc54-7804-4c89-97a2-842a9c03c42a.tar.gz"
     artifact_paths:
       - "build/mongod.log"
       - "build/genesis.json"
@@ -76,6 +75,8 @@ steps:
       - "queue=mac-anka-node-fleet"
     plugins:
       chef/anka#v0.4.4:
+        no-volume: true # Tests do not support running from a fuse mount
+        workdir: $WORKDIR
         vm-name: $ANKA_MOJAVE_TEMPLATE
         vm-registry-tag: "${ANKA_TEMPLATE_TAG}::${MAC_TAG}"
         always-pull: true
