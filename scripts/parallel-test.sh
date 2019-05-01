@@ -1,7 +1,5 @@
 #!/bin/bash
 set -eo pipefail
-echo "[Extracting build directory]"
-[[ -z "${1}" ]] && tar -zxf build.tar.gz || tar -xzf $1
 cd ./build
 echo "[Running tests]"
 set +e # defer ctest error handling to end
