@@ -18,7 +18,4 @@ EXIT_STATUS=$?
 exit $?
 mv $(pwd)/Testing/$(ls $(pwd)/Testing/ | grep '20' | tail -n 1)/Test.xml test-results.xml
 # ctest error handling
-if [[ "$EXIT_STATUS" != 0 ]]; then
-    echo "Failing due to non-zero exit status from ctest: $EXIT_STATUS"
-    exit $EXIT_STATUS
-fi
+[[ "$EXIT_STATUS" != 0 ]] && echo "Failing due to non-zero exit status from ctest: $EXIT_STATUS" && exit $EXIT_STATUS
