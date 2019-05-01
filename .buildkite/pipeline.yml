@@ -7,39 +7,39 @@ env:
 
 steps:
 
-  - trigger: "mac-anka-fleet"
-    label: ":anka: Ensure Mojave Anka Template Tag Exists"
-    branches: "*"
-    async: false
-    build:
-      branch: "master"
-      env:
-        REPO: "${BUILDKITE_REPO}"
-        REPO_BRANCH: "${BUILDKITE_BRANCH}"
-        CHECKSUMABLE: "${CHECKSUMABLE}"
-        TEMPLATE: "${ANKA_MOJAVE_TEMPLATE}"
-        TEMPLATE_TAG: "${ANKA_TEMPLATE_TAG}"
-        TAG_COMMANDS: "CLONED_REPO_DIR/scripts/eosio_build.sh -y -P -f -m" # CLONED_REPO_DIR IS REQUIRED and is where the repo is always cloned into
-        PROJECT_TAG: "${MAC_TAG}"
-
-  - wait
-
-  # - label: ":darwin: [Darwin] Mojave Build"
-  #   command:
-  #     - "./scripts/eosio_build.sh -y -P -m"
-  #     - "tar -pczf /Network/NAS/MAC_FLEET/BUILDKITE/artifacts/${ANKA_MOJAVE_TEMPLATE}-${BUILDKITE_PIPELINE_SLUG}-${BUILDKITE_BUILD_ID}.tar.gz *"
-  #   plugins:
-  #     chef/anka#v0.4.4:
-  #       vm-name: $ANKA_MOJAVE_TEMPLATE
-  #       vm-registry-tag: "${ANKA_TEMPLATE_TAG}::${MAC_TAG}"
-  #       always-pull: true
-  #       debug: true
-  #       wait-network: true
-  #   agents:
-  #     - "queue=mac-anka-node-fleet"
-  #   timeout: 120
+  # - trigger: "mac-anka-fleet"
+  #   label: ":anka: Ensure Mojave Anka Template Tag Exists"
+  #   branches: "*"
+  #   async: false
+  #   build:
+  #     branch: "master"
+  #     env:
+  #       REPO: "${BUILDKITE_REPO}"
+  #       REPO_BRANCH: "${BUILDKITE_BRANCH}"
+  #       CHECKSUMABLE: "${CHECKSUMABLE}"
+  #       TEMPLATE: "${ANKA_MOJAVE_TEMPLATE}"
+  #       TEMPLATE_TAG: "${ANKA_TEMPLATE_TAG}"
+  #       TAG_COMMANDS: "CLONED_REPO_DIR/scripts/eosio_build.sh -y -P -f -m" # CLONED_REPO_DIR IS REQUIRED and is where the repo is always cloned into
+  #       PROJECT_TAG: "${MAC_TAG}"
 
   # - wait
+
+  - label: ":darwin: [Darwin] Mojave Build"
+    command:
+      - "./scripts/eosio_build.sh -y -P -m"
+      - "tar -pczf /Network/NAS/MAC_FLEET/BUILDKITE/artifacts/${ANKA_MOJAVE_TEMPLATE}-${BUILDKITE_PIPELINE_SLUG}-${BUILDKITE_BUILD_ID}.tar.gz *"
+    plugins:
+      chef/anka#v0.4.4:
+        vm-name: $ANKA_MOJAVE_TEMPLATE
+        vm-registry-tag: "${ANKA_TEMPLATE_TAG}::${MAC_TAG}"
+        always-pull: true
+        debug: true
+        wait-network: true
+    agents:
+      - "queue=mac-anka-node-fleet"
+    timeout: 120
+
+  - wait
 
   - label: ":darwin: [Darwin] Mojave Tests"
     command:
