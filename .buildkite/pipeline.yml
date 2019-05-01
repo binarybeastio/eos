@@ -65,7 +65,7 @@ steps:
 
   - label: ":darwin: [Darwin] Mojave Tests"
     command:
-      - "mkdir -p /private/var/tmp/ankafs.0 && cd /private/var/tmp/ankafs.0/build && tar -xzf /Network/NAS/MAC_FLEET/BUILDKITE/artifacts/10.14.4_6C_14G_40G-eosio-e65cbc54-7804-4c89-97a2-842a9c03c42a.tar.gz"
+      - "mkdir -p /private/var/tmp/ankafs.0 && cd /private/var/tmp/ankafs.0 && tar -xzf /Network/NAS/MAC_FLEET/BUILDKITE/artifacts/10.14.4_6C_14G_40G-eosio-e65cbc54-7804-4c89-97a2-842a9c03c42a.tar.gz"
       - "cd /private/var/tmp/ankafs.0/build && ctest -L nonparallelizable_tests --progress --output-on-failure -T Test"
     artifact_paths:
       - "build/mongod.log"
