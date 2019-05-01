@@ -7,44 +7,44 @@ env:
 
 steps:
 
-  - trigger: "mac-anka-fleet"
-    label: ":anka: Ensure Mojave Anka Template Tag Exists"
-    branches: "*"
-    async: false
-    build:
-      branch: "master"
-      env:
-        REPO: "${BUILDKITE_REPO}"
-        REPO_BRANCH: "${BUILDKITE_BRANCH}"
-        CHECKSUMABLE: "${CHECKSUMABLE}"
-        TEMPLATE: "${ANKA_MOJAVE_TEMPLATE}"
-        TEMPLATE_TAG: "${ANKA_TEMPLATE_TAG}"
-        TAG_COMMANDS: "CLONED_REPO_DIR/scripts/eosio_build.sh -y -P -f -m" # CLONED_REPO_DIR IS REQUIRED and is where the repo is always cloned into
-        PROJECT_TAG: "${MAC_TAG}"
+  # - trigger: "mac-anka-fleet"
+  #   label: ":anka: Ensure Mojave Anka Template Tag Exists"
+  #   branches: "*"
+  #   async: false
+  #   build:
+  #     branch: "master"
+  #     env:
+  #       REPO: "${BUILDKITE_REPO}"
+  #       REPO_BRANCH: "${BUILDKITE_BRANCH}"
+  #       CHECKSUMABLE: "${CHECKSUMABLE}"
+  #       TEMPLATE: "${ANKA_MOJAVE_TEMPLATE}"
+  #       TEMPLATE_TAG: "${ANKA_TEMPLATE_TAG}"
+  #       TAG_COMMANDS: "CLONED_REPO_DIR/scripts/eosio_build.sh -y -P -f -m" # CLONED_REPO_DIR IS REQUIRED and is where the repo is always cloned into
+  #       PROJECT_TAG: "${MAC_TAG}"
 
-  - wait
+  # - wait
 
-  - label: ":darwin: [Darwin] Mojave Build"
-    command:
-      - "./scripts/eosio_build.sh -y -P"
-      - "tar -pczf /Network/NAS/MAC_FLEET/BUILDKITE/artifacts/${ANKA_MOJAVE_TEMPLATE}-${BUILDKITE_PIPELINE_SLUG}-${BUILDKITE_BUILD_ID}.tar.gz build"
-    plugins:
-      chef/anka#v0.4.4:
-        vm-name: $ANKA_MOJAVE_TEMPLATE
-        vm-registry-tag: "${ANKA_TEMPLATE_TAG}::${MAC_TAG}"
-        always-pull: true
-        debug: true
-        wait-network: true
-    agents:
-      - "queue=mac-anka-node-fleet"
-    timeout: 120
+  # - label: ":darwin: [Darwin] Mojave Build"
+  #   command:
+  #     - "./scripts/eosio_build.sh -y -P"
+  #     - "tar -pczf /Network/NAS/MAC_FLEET/BUILDKITE/artifacts/${ANKA_MOJAVE_TEMPLATE}-${BUILDKITE_PIPELINE_SLUG}-${BUILDKITE_BUILD_ID}.tar.gz build"
+  #   plugins:
+  #     chef/anka#v0.4.4:
+  #       vm-name: $ANKA_MOJAVE_TEMPLATE
+  #       vm-registry-tag: "${ANKA_TEMPLATE_TAG}::${MAC_TAG}"
+  #       always-pull: true
+  #       debug: true
+  #       wait-network: true
+  #   agents:
+  #     - "queue=mac-anka-node-fleet"
+  #   timeout: 120
 
-  - wait
+  # - wait
 
   - label: ":darwin: [Darwin] Mojave Tests"
     command:
       # ssh needed to work around tty limitations of anka run (they're releasing a fix in the next major version)
-      - "ssh -i ~/.ssh/localhost anka@localhost \"cd $WORKDIR && PATH=$PATH ./scripts/parallel-test.sh /Network/NAS/MAC_FLEET/BUILDKITE/artifacts/${ANKA_MOJAVE_TEMPLATE}-${BUILDKITE_PIPELINE_SLUG}-${BUILDKITE_BUILD_ID}.tar.gz\""
+      - "ssh -i ~/.ssh/localhost anka@localhost \"cd $WORKDIR && PATH=$PATH ./scripts/parallel-test.sh /Network/NAS/MAC_FLEET/BUILDKITE/artifacts/10.14.4_6C_14G_40G-eosio-e65cbc54-7804-4c89-97a2-842a9c03c42a.tar.gz\""
     artifact_paths:
       - "build/genesis.json"
       - "build/config.ini"
@@ -60,21 +60,21 @@ steps:
         wait-network: true
     timeout: 120
 
-  - label: ":darwin: [Darwin] Mojave Tests"
-    command:
-      - "ssh -i ~/.ssh/localhost anka@localhost \"cd $WORKDIR && PATH=$PATH ./scripts/serial-test.sh /Network/NAS/MAC_FLEET/BUILDKITE/artifacts/${ANKA_MOJAVE_TEMPLATE}-${BUILDKITE_PIPELINE_SLUG}-${BUILDKITE_BUILD_ID}.tar.gz\""
-    artifact_paths:
-      - "build/mongod.log"
-      - "build/genesis.json"
-      - "build/config.ini"
-      - "build/test-results.xml"
-    agents:
-      - "queue=mac-anka-node-fleet"
-    plugins:
-      chef/anka#v0.4.4:
-        vm-name: $ANKA_MOJAVE_TEMPLATE
-        vm-registry-tag: "${ANKA_TEMPLATE_TAG}::${MAC_TAG}"
-        always-pull: true
-        debug: true
-        wait-network: true
-    timeout: 120
+  # - label: ":darwin: [Darwin] Mojave Tests"
+  #   command:
+  #     - "ssh -i ~/.ssh/localhost anka@localhost \"cd $WORKDIR && PATH=$PATH ./scripts/serial-test.sh /Network/NAS/MAC_FLEET/BUILDKITE/artifacts/${ANKA_MOJAVE_TEMPLATE}-${BUILDKITE_PIPELINE_SLUG}-${BUILDKITE_BUILD_ID}.tar.gz\""
+  #   artifact_paths:
+  #     - "build/mongod.log"
+  #     - "build/genesis.json"
+  #     - "build/config.ini"
+  #     - "build/test-results.xml"
+  #   agents:
+  #     - "queue=mac-anka-node-fleet"
+  #   plugins:
+  #     chef/anka#v0.4.4:
+  #       vm-name: $ANKA_MOJAVE_TEMPLATE
+  #       vm-registry-tag: "${ANKA_TEMPLATE_TAG}::${MAC_TAG}"
+  #       always-pull: true
+  #       debug: true
+  #       wait-network: true
+  #   timeout: 120
