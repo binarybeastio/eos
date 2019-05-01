@@ -26,7 +26,7 @@ steps:
 
   - label: ":darwin: [Darwin] Mojave Build"
     command:
-      - "./scripts/eosio_build.sh -y -P"
+      - "./scripts/eosio_build.sh -y -P -m"
       - "tar -pczf /Network/NAS/MAC_FLEET/BUILDKITE/artifacts/${ANKA_MOJAVE_TEMPLATE}-${BUILDKITE_PIPELINE_SLUG}-${BUILDKITE_BUILD_ID}.tar.gz *"
     plugins:
       chef/anka#v0.4.4:
@@ -54,6 +54,7 @@ steps:
       - "queue=mac-anka-node-fleet"
     plugins:
       chef/anka#v0.4.4:
+        bash-interactive: true
         no-volume: true # Tests do not support running from a fuse mount
         workdir: $WORKDIR
         vm-name: $ANKA_MOJAVE_TEMPLATE
@@ -76,6 +77,7 @@ steps:
       - "queue=mac-anka-node-fleet"
     plugins:
       chef/anka#v0.4.4:
+        bash-interactive: true
         no-volume: true # Tests do not support running from a fuse mount
         workdir: $WORKDIR
         vm-name: $ANKA_MOJAVE_TEMPLATE
