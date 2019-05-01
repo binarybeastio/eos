@@ -66,12 +66,12 @@ steps:
   #   timeout: 120
 
   - label: ":darwin: [Darwin] Mojave Tests"
-    command: |
-      echo "#!/bin/bash \
-      set -eo pipefail \
-      exit 0" > test.sh
-      chmod +x test.sh
-      ./test.sh
+    command:
+      - "echo '#!/bin/bash' >> test.sh"
+      - "echo 'set -eo pipefail'"
+      - "echo 'exit 0' >> test.sh"
+      - "chmod +x test.sh"
+      - "./test.sh"
     artifact_paths:
       - "build/mongod.log"
       - "build/genesis.json"
