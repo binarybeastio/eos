@@ -11,6 +11,14 @@ mongod --fork --dbpath ~/data/mongodb -f ~/etc/mongod.conf --logpath ~/var/log/m
 cd ./build
 # run tests
 echo "[Running tests]"
-ctest -L nonparallelizable_tests --output-on-failure -T Test; echo $?
+set +e # defer ctest error handling to end
+ctest -L nonparallelizable_tests --progress --output-on-failure -T Test -VV
+EXIT_STATUS=$?
+[[ "$EXIT_STATUS" == 0 ]] && set -e
 exit $?
 mv $(pwd)/Testing/$(ls $(pwd)/Testing/ | grep '20' | tail -n 1)/Test.xml test-results.xml
+# ctest error handling
+if [[ "$EXIT_STATUS" != 0 ]]; then
+    echo "Failing due to non-zero exit status from ctest: $EXIT_STATUS"
+    exit $EXIT_STATUS
+fi
