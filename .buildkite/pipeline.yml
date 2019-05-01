@@ -39,7 +39,7 @@ steps:
       - "queue=mac-anka-node-fleet"
     timeout: 120
 
-  # - wait
+  - wait
 
   - label: ":darwin: [Darwin] Mojave Tests"
     command:
