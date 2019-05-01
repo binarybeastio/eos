@@ -16,5 +16,7 @@ ctest -L nonparallelizable_tests --progress --output-on-failure -T Test
 EXIT_STATUS=$?
 [[ "$EXIT_STATUS" == 0 ]] && set -e
 mv $(pwd)/Testing/$(ls $(pwd)/Testing/ | grep '20' | tail -n 1)/Test.xml test-results.xml
+echo $?
+echo $EXIT_STATUS
 # ctest error handling
 [[ "$EXIT_STATUS" != 0 ]] && echo "Failing due to non-zero exit status from ctest: $EXIT_STATUS" && exit $EXIT_STATUS
