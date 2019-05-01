@@ -65,7 +65,7 @@ steps:
 
   - label: ":darwin: [Darwin] Mojave Tests"
     command:
-      - "./scripts/parallel-test.sh /Network/NAS/MAC_FLEET/BUILDKITE/artifacts/10.14.4_6C_14G_40G-eosio-e65cbc54-7804-4c89-97a2-842a9c03c42a.tar.gz"
+      - "./scripts/serial-test.sh /Network/NAS/MAC_FLEET/BUILDKITE/artifacts/10.14.4_6C_14G_40G-eosio-e65cbc54-7804-4c89-97a2-842a9c03c42a.tar.gz"
     artifact_paths:
       - "build/mongod.log"
       - "build/genesis.json"
