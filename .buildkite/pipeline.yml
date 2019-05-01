@@ -67,13 +67,13 @@ steps:
 
   - label: ":darwin: [Darwin] Mojave Tests"
     command:
-      - "echo '#!/bin/bash' >> test.sh"
-      - "echo 'set -eo pipefail' >> test.sh"
-      - "echo 'set +e' >> test.sh"
-      - "echo 'echo test' >> test.sh"
-      - "echo 'set -e' >> test.sh"
-      - "echo 'echo YESS' >> test.sh"
-      - "echo 'exit 0' >> test.sh"
+      - "echo '#!/bin/bash' >> test.sh
+        echo 'set -eo pipefail' >> test.sh
+        echo 'set +e' >> test.sh
+        echo 'echo test' >> test.sh
+        echo 'set -e' >> test.sh
+        echo 'echo YESS' >> test.sh
+        echo 'exit 0' >> test.sh"
       - "chmod +x test.sh"
       - "./test.sh"
     artifact_paths:
