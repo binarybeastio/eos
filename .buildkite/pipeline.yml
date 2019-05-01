@@ -45,7 +45,7 @@ steps:
     command:
       # ssh needed to work around tty limitations of anka run (they're releasing a fix in the next major version)
       # - "ssh -i ~/.ssh/localhost anka@localhost \"cd $WORKDIR && PATH=$PATH ./scripts/parallel-test.sh /Network/NAS/MAC_FLEET/BUILDKITE/artifacts/10.14.4_6C_14G_40G-eosio-e65cbc54-7804-4c89-97a2-842a9c03c42a.tar.gz\"; echo $?"
-      - "ssh -i ~/.ssh/localhost anka@localhost \"cd $WORKDIR && exit 2\"; echo \"complete\""
+      - "ssh -i ~/.ssh/localhost anka@localhost \"cd $WORKDIR && exit 2\"; echo \"$?\""
 
     artifact_paths:
       - "build/genesis.json"
