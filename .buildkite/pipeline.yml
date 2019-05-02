@@ -67,8 +67,6 @@ steps:
 
   - label: ":darwin: [Darwin] Mojave Tests"
     command:
-      - echo "#!/bin/bash\nset -eo pipefail\nset +e\necho test\nset -e\necho YESS\nexit 0" >> test.sh
-      - "chmod +x test.sh"
       - "./test.sh"
     artifact_paths:
       - "build/mongod.log"
