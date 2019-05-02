@@ -7,54 +7,53 @@ env:
 
 steps:
 
-  - trigger: "mac-anka-fleet"
-    label: ":anka: Ensure Mojave Anka Template Tag Exists"
-    branches: "*"
-    async: false
-    build:
-      branch: "master"
-      env:
-        REPO: "${BUILDKITE_REPO}"
-        REPO_BRANCH: "${BUILDKITE_BRANCH}"
-        CHECKSUMABLE: "${CHECKSUMABLE}"
-        TEMPLATE: "${ANKA_MOJAVE_TEMPLATE}"
-        TEMPLATE_TAG: "${ANKA_TEMPLATE_TAG}"
-        TAG_COMMANDS: "CLONED_REPO_DIR/scripts/eosio_build.sh -y -P -f -m" # CLONED_REPO_DIR IS REQUIRED and is where the repo is always cloned into
-        PROJECT_TAG: "${MAC_TAG}"
+  # - trigger: "mac-anka-fleet"
+  #   label: ":anka: Ensure Mojave Anka Template Tag Exists"
+  #   branches: "*"
+  #   async: false
+  #   build:
+  #     branch: "master"
+  #     env:
+  #       REPO: "${BUILDKITE_REPO}"
+  #       REPO_BRANCH: "${BUILDKITE_BRANCH}"
+  #       CHECKSUMABLE: "${CHECKSUMABLE}"
+  #       TEMPLATE: "${ANKA_MOJAVE_TEMPLATE}"
+  #       TEMPLATE_TAG: "${ANKA_TEMPLATE_TAG}"
+  #       TAG_COMMANDS: "CLONED_REPO_DIR/scripts/eosio_build.sh -y -P -f -m" # CLONED_REPO_DIR IS REQUIRED and is where the repo is always cloned into
+  #       PROJECT_TAG: "${MAC_TAG}"
 
-  - wait
+  # - wait
 
-  - label: ":darwin: [Darwin] Mojave Build"
-    command:
-      - "./scripts/eosio_build.sh -y -P -m"
-      - "tar -pczf /Network/NAS/MAC_FLEET/BUILDKITE/artifacts/${ANKA_MOJAVE_TEMPLATE}-${BUILDKITE_PIPELINE_SLUG}-${BUILDKITE_BUILD_ID}.tar.gz *"
-    plugins:
-      chef/anka#v0.4.4:
-        vm-name: $ANKA_MOJAVE_TEMPLATE
-        vm-registry-tag: "${ANKA_TEMPLATE_TAG}::${MAC_TAG}"
-        always-pull: true
-        debug: true
-        wait-network: true
-    agents:
-      - "queue=mac-anka-node-fleet"
-    timeout: 120
+  # - label: ":darwin: [Darwin] Mojave Build"
+  #   command:
+  #     - "./scripts/eosio_build.sh -y -P -m"
+  #     - "tar -pczf /Network/NAS/MAC_FLEET/BUILDKITE/artifacts/${ANKA_MOJAVE_TEMPLATE}-${BUILDKITE_PIPELINE_SLUG}-${BUILDKITE_BUILD_ID}.tar.gz *"
+  #   plugins:
+  #     chef/anka#v0.4.4:
+  #       vm-name: $ANKA_MOJAVE_TEMPLATE
+  #       vm-registry-tag: "${ANKA_TEMPLATE_TAG}::${MAC_TAG}"
+  #       always-pull: true
+  #       debug: true
+  #       wait-network: true
+  #   agents:
+  #     - "queue=mac-anka-node-fleet"
+  #   timeout: 120
 
-  - wait
+  # - wait
 
   - label: ":darwin: [Darwin] Mojave Tests"
     command:
-      - "tar -xzf /Network/NAS/MAC_FLEET/BUILDKITE/artifacts/${ANKA_MOJAVE_TEMPLATE}-${BUILDKITE_PIPELINE_SLUG}-${BUILDKITE_BUILD_ID}.tar.gz"
-      - "./scripts/parallel-test.sh"
+      - "mkdir -p PIPELINE && cd PIPELINE && tar -xzf /Network/NAS/MAC_FLEET/BUILDKITE/artifacts/10.14.4_6C_14G_40G-eosio-756ff755-43b7-465e-8e34-9d31941791e9.tar.gz"
+      - "cd PIPELINE && ./scripts/parallel-test.sh"
     artifact_paths:
-      - "$WORKDIR/build/mongod.log"
-      - "$WORKDIR/build/genesis.json"
-      - "$WORKDIR/build/config.ini"
-      - "$WORKDIR/build/test-results.xml"
+      - "~/var/log/mongodb/mongod.log"
+      - "$WORKDIR/PIPELINE/build/genesis.json"
+      - "$WORKDIR/PIPELINE/build/config.ini"
+      - "$WORKDIR/PIPELINE/build/test-results.xml"
     agents:
       - "queue=mac-anka-node-fleet"
     plugins:
       chef/anka#v0.4.4:
-        no-volume: true # Tests do not support running from a fuse mount
         workdir: $WORKDIR
         vm-name: $ANKA_MOJAVE_TEMPLATE
         vm-registry-tag: "${ANKA_TEMPLATE_TAG}::${MAC_TAG}"
@@ -65,8 +64,8 @@ steps:
 
   - label: ":darwin: [Darwin] Mojave Tests"
     command:
-      - "tar -xzf /Network/NAS/MAC_FLEET/BUILDKITE/artifacts/${ANKA_MOJAVE_TEMPLATE}-${BUILDKITE_PIPELINE_SLUG}-${BUILDKITE_BUILD_ID}.tar.gz"
-      - "./scripts/serial-test.sh"
+      - "mkdir -p PIPELINE && cd PIPELINE && tar -xzf /Network/NAS/MAC_FLEET/BUILDKITE/artifacts/10.14.4_6C_14G_40G-eosio-756ff755-43b7-465e-8e34-9d31941791e9.tar.gz"
+      - "cd PIPELINE && ./scripts/serial-test.sh"
     artifact_paths:
       - "$WORKDIR/build/mongod.log"
       - "$WORKDIR/build/genesis.json"
@@ -76,7 +75,6 @@ steps:
       - "queue=mac-anka-node-fleet"
     plugins:
       chef/anka#v0.4.4:
-        no-volume: true # Tests do not support running from a fuse mount
         workdir: $WORKDIR
         vm-name: $ANKA_MOJAVE_TEMPLATE
         vm-registry-tag: "${ANKA_TEMPLATE_TAG}::${MAC_TAG}"
