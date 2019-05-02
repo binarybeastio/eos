@@ -27,7 +27,7 @@ steps:
   # - label: ":darwin: [Darwin] Mojave Build"
   #   command:
   #     - "./scripts/eosio_build.sh -y -P -m"
-  #     - "tar -pczf /Network/NAS/MAC_FLEET/BUILDKITE/artifacts/${ANKA_MOJAVE_TEMPLATE}-${BUILDKITE_PIPELINE_SLUG}-${BUILDKITE_BUILD_ID}.tar.gz *"
+  #     - "tar -pczf /Network/NAS/MAC_FLEET/BUILDKITE/artifacts/${ANKA_MOJAVE_TEMPLATE}-${BUILDKITE_PIPELINE_SLUG}-${BUILDKITE_BUILD_ID}.tar.gz build"
   #   plugins:
   #     chef/anka#v0.4.4:
   #       vm-name: $ANKA_MOJAVE_TEMPLATE
@@ -43,12 +43,12 @@ steps:
 
   - label: ":darwin: [Darwin] Mojave Tests"
     command:
-      - "mkdir -p PIPELINE && cd PIPELINE && tar -xzf /Network/NAS/MAC_FLEET/BUILDKITE/artifacts/10.14.4_6C_14G_40G-eosio-756ff755-43b7-465e-8e34-9d31941791e9.tar.gz"
-      - "cd PIPELINE && ./scripts/parallel-test.sh"
+      - "tar -xzf /Network/NAS/MAC_FLEET/BUILDKITE/artifacts/${ANKA_MOJAVE_TEMPLATE}-${BUILDKITE_PIPELINE_SLUG}-${BUILDKITE_BUILD_ID}.tar.gz"
+      - "./scripts/parallel-test.sh"
     artifact_paths:
-      - "PIPELINE/build/genesis.json"
-      - "PIPELINE/build/config.ini"
-      - "PIPELINE/build/test-results.xml"
+      - "build/genesis.json"
+      - "build/config.ini"
+      - "build/test-results.xml"
     agents:
       - "queue=mac-anka-node-fleet"
     plugins:
@@ -63,13 +63,13 @@ steps:
 
   - label: ":darwin: [Darwin] Mojave Tests"
     command:
-      - "mkdir -p PIPELINE && cd PIPELINE && tar -xzf /Network/NAS/MAC_FLEET/BUILDKITE/artifacts/10.14.4_6C_14G_40G-eosio-756ff755-43b7-465e-8e34-9d31941791e9.tar.gz"
-      - "cd PIPELINE && ./scripts/serial-test.sh"
+      - "tar -xzf /Network/NAS/MAC_FLEET/BUILDKITE/artifacts/${ANKA_MOJAVE_TEMPLATE}-${BUILDKITE_PIPELINE_SLUG}-${BUILDKITE_BUILD_ID}.tar.gz"
+      - "./scripts/serial-test.sh"
     artifact_paths:
-      - "PIPELINE/build/mongod.log"
-      - "PIPELINE/build/genesis.json"
-      - "PIPELINE/build/config.ini"
-      - "PIPELINE/build/test-results.xml"
+      - "build/mongod.log"
+      - "build/genesis.json"
+      - "build/config.ini"
+      - "build/test-results.xml"
     agents:
       - "queue=mac-anka-node-fleet"
     plugins:
