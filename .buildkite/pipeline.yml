@@ -54,7 +54,6 @@ steps:
     plugins:
       chef/anka#v0.4.4:
         bash-interactive: true
-        workdir: $WORKDIR
         vm-name: $ANKA_MOJAVE_TEMPLATE
         vm-registry-tag: "${ANKA_TEMPLATE_TAG}::${MAC_TAG}"
         always-pull: true
@@ -76,7 +75,6 @@ steps:
     plugins:
       chef/anka#v0.4.4:
         bash-interactive: true
-        workdir: $WORKDIR
         vm-name: $ANKA_MOJAVE_TEMPLATE
         vm-registry-tag: "${ANKA_TEMPLATE_TAG}::${MAC_TAG}"
         always-pull: true
