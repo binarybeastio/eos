@@ -46,10 +46,9 @@ steps:
       - "mkdir -p PIPELINE && cd PIPELINE && tar -xzf /Network/NAS/MAC_FLEET/BUILDKITE/artifacts/10.14.4_6C_14G_40G-eosio-756ff755-43b7-465e-8e34-9d31941791e9.tar.gz"
       - "cd PIPELINE && ./scripts/parallel-test.sh"
     artifact_paths:
-      - "~/var/log/mongodb/mongod.log"
-      - "$WORKDIR/PIPELINE/build/genesis.json"
-      - "$WORKDIR/PIPELINE/build/config.ini"
-      - "$WORKDIR/PIPELINE/build/test-results.xml"
+      - "PIPELINE/build/genesis.json"
+      - "PIPELINE/build/config.ini"
+      - "PIPELINE/build/test-results.xml"
     agents:
       - "queue=mac-anka-node-fleet"
     plugins:
@@ -68,10 +67,10 @@ steps:
       - "mkdir -p PIPELINE && cd PIPELINE && tar -xzf /Network/NAS/MAC_FLEET/BUILDKITE/artifacts/10.14.4_6C_14G_40G-eosio-756ff755-43b7-465e-8e34-9d31941791e9.tar.gz"
       - "cd PIPELINE && ./scripts/serial-test.sh"
     artifact_paths:
-      - "$WORKDIR/build/mongod.log"
-      - "$WORKDIR/build/genesis.json"
-      - "$WORKDIR/build/config.ini"
-      - "$WORKDIR/build/test-results.xml"
+      - "~/var/log/mongodb/mongod.log"
+      - "PIPELINE/build/genesis.json"
+      - "PIPELINE/build/config.ini"
+      - "PIPELINE/build/test-results.xml"
     agents:
       - "queue=mac-anka-node-fleet"
     plugins:
