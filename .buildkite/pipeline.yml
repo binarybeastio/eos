@@ -50,6 +50,7 @@ steps:
     plugins:
       chef/anka#v0.4.4:
         no-volume: true
+        inherit-environment-vars: true
         bash-interactive: true
         vm-name: $ANKA_MOJAVE_TEMPLATE
         vm-registry-tag: "${ANKA_TEMPLATE_TAG}::${MAC_TAG}"
@@ -67,6 +68,7 @@ steps:
     plugins:
       chef/anka#v0.4.4:
         no-volume: true
+        inherit-environment-vars: true
         bash-interactive: true
         vm-name: $ANKA_MOJAVE_TEMPLATE
         vm-registry-tag: "${ANKA_TEMPLATE_TAG}::${MAC_TAG}"
