@@ -13,10 +13,12 @@ set +e # defer ctest error handling to end
 ctest -L nonparallelizable_tests --output-on-failure -T Test
 EXIT_STATUS=$?
 [[ $EXIT_STATUS == 0 ]] && set -e
+echo "[Uploading artifacts]"
+pwd
 mv ./Testing/$(ls ./Testing/ | grep '20' | tail -n 1)/Test.xml test-results.xml
 buildkite-agent artifact upload test-results.xml
-buildkite-agent artifact upload config.ini
-buildkite-agent artifact upload genesis.json
+buildkite-agent artifact upload build/config.ini
+buildkite-agent artifact upload build/genesis.json
 mv ~/var/log/mongodb/mongod.log mongod.log
 buildkite-agent artifact upload mongod.log
 # ctest error handling
