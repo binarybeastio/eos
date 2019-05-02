@@ -51,6 +51,7 @@ steps:
       chef/anka#v0.4.4:
         no-volume: true
         inherit-environment-vars: true
+        workdir: $WORKDIR
         bash-interactive: true
         vm-name: $ANKA_MOJAVE_TEMPLATE
         vm-registry-tag: "${ANKA_TEMPLATE_TAG}::${MAC_TAG}"
@@ -69,6 +70,7 @@ steps:
       chef/anka#v0.4.4:
         no-volume: true
         inherit-environment-vars: true
+        workdir: $WORKDIR
         bash-interactive: true
         vm-name: $ANKA_MOJAVE_TEMPLATE
         vm-registry-tag: "${ANKA_TEMPLATE_TAG}::${MAC_TAG}"
