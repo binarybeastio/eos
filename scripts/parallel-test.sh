@@ -10,7 +10,9 @@ EXIT_STATUS=$?
 echo "[Uploading artifacts]"
 mv ./Testing/$(ls ./Testing/ | grep '20' | tail -n 1)/Test.xml test-results.xml
 buildkite-agent artifact upload test-results.xml
-buildkite-agent artifact upload build/config.ini
-buildkite-agent artifact upload build/genesis.json
+pwd
+ls -laht
+buildkite-agent artifact upload config.ini
+buildkite-agent artifact upload genesis.json
 # ctest error handling
 [[ $EXIT_STATUS != 0 ]] && echo "Failing due to non-zero exit status from ctest: $EXIT_STATUS"; exit $EXIT_STATUS
