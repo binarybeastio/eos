@@ -7,6 +7,7 @@ ctest -j $(getconf _NPROCESSORS_ONLN) -LE _tests --output-on-failure -T Test
 EXIT_STATUS=$?
 [[ "$EXIT_STATUS" == 0 ]] && set -e
 # Prepare tests for artifact upload
+pwd
 mv ./Testing/$(ls ./Testing/ | grep '20' | tail -n 1)/Test.xml test-results.xml
 buildkite-agent artifact upload test-results.xml
 buildkite-agent artifact upload config.ini
