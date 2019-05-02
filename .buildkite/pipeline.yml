@@ -44,7 +44,7 @@ steps:
   - label: ":darwin: [Darwin] Mojave Tests"
     command:
       - "tar -xzf /Network/NAS/MAC_FLEET/BUILDKITE/artifacts/${ANKA_MOJAVE_TEMPLATE}-${BUILDKITE_PIPELINE_SLUG}-${BUILDKITE_BUILD_ID}.tar.gz"
-      - "./scripts/serial-test.sh"
+      - "./scripts/parallel-test.sh"
     artifact_paths:
       - "$WORKDIR/build/mongod.log"
       - "$WORKDIR/build/genesis.json"
