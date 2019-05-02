@@ -1,28 +1,28 @@
 env:
   ANKA_MOJAVE_TEMPLATE: "10.14.4_6C_14G_40G"
-  ANKA_TEMPLATE_TAG: "clean::cicd::git-ssh::nas::brew"
+  ANKA_TEMPLATE_TAG: "clean::cicd::git-ssh::nas::brew::buildkite-agent-3.11.2"
   CHECKSUMABLE: "scripts/eosio_build*"
-  MAC_TAG: "eosio_2-5"
+  MAC_TAG: "eosio_2-3"
   WORKDIR: "/private/var/tmp/ankafs.0"
 
 steps:
 
-  # - trigger: "mac-anka-fleet"
-  #   label: ":anka: Ensure Mojave Anka Template Tag Exists"
-  #   branches: "*"
-  #   async: false
-  #   build:
-  #     branch: "master"
-  #     env:
-  #       REPO: "${BUILDKITE_REPO}"
-  #       REPO_BRANCH: "${BUILDKITE_BRANCH}"
-  #       CHECKSUMABLE: "${CHECKSUMABLE}"
-  #       TEMPLATE: "${ANKA_MOJAVE_TEMPLATE}"
-  #       TEMPLATE_TAG: "${ANKA_TEMPLATE_TAG}"
-  #       TAG_COMMANDS: "CLONED_REPO_DIR/scripts/eosio_build.sh -y -P -f -m" # CLONED_REPO_DIR IS REQUIRED and is where the repo is always cloned into
-  #       PROJECT_TAG: "${MAC_TAG}"
+  - trigger: "mac-anka-fleet"
+    label: ":anka: Ensure Mojave Anka Template Tag Exists"
+    branches: "*"
+    async: false
+    build:
+      branch: "master"
+      env:
+        REPO: "${BUILDKITE_REPO}"
+        REPO_BRANCH: "${BUILDKITE_BRANCH}"
+        CHECKSUMABLE: "${CHECKSUMABLE}"
+        TEMPLATE: "${ANKA_MOJAVE_TEMPLATE}"
+        TEMPLATE_TAG: "${ANKA_TEMPLATE_TAG}"
+        TAG_COMMANDS: "CLONED_REPO_DIR/scripts/eosio_build.sh -y -P -f -m" # CLONED_REPO_DIR IS REQUIRED and is where the repo is always cloned into
+        PROJECT_TAG: "${MAC_TAG}"
 
-  # - wait
+  - wait
 
   - label: ":darwin: [Darwin] Mojave Build"
     command:
@@ -45,14 +45,11 @@ steps:
     command:
       - "tar -xzf /Network/NAS/MAC_FLEET/BUILDKITE/artifacts/${ANKA_MOJAVE_TEMPLATE}-${BUILDKITE_PIPELINE_SLUG}-${BUILDKITE_BUILD_ID}.tar.gz"
       - "./scripts/parallel-test.sh"
-    artifact_paths:
-      - "build/genesis.json"
-      - "build/config.ini"
-      - "build/test-results.xml"
     agents:
       - "queue=mac-anka-node-fleet"
     plugins:
       chef/anka#v0.4.4:
+        no-volume: true
         bash-interactive: true
         vm-name: $ANKA_MOJAVE_TEMPLATE
         vm-registry-tag: "${ANKA_TEMPLATE_TAG}::${MAC_TAG}"
@@ -65,15 +62,11 @@ steps:
     command:
       - "tar -xzf /Network/NAS/MAC_FLEET/BUILDKITE/artifacts/${ANKA_MOJAVE_TEMPLATE}-${BUILDKITE_PIPELINE_SLUG}-${BUILDKITE_BUILD_ID}.tar.gz"
       - "./scripts/serial-test.sh"
-    artifact_paths:
-      - "build/mongod.log"
-      - "build/genesis.json"
-      - "build/config.ini"
-      - "build/test-results.xml"
     agents:
       - "queue=mac-anka-node-fleet"
     plugins:
       chef/anka#v0.4.4:
+        no-volume: true
         bash-interactive: true
         vm-name: $ANKA_MOJAVE_TEMPLATE
         vm-registry-tag: "${ANKA_TEMPLATE_TAG}::${MAC_TAG}"

@@ -14,6 +14,9 @@ ctest -L nonparallelizable_tests --output-on-failure -T Test
 EXIT_STATUS=$?
 [[ $EXIT_STATUS == 0 ]] && set -e
 mv ./Testing/$(ls ./Testing/ | grep '20' | tail -n 1)/Test.xml test-results.xml
-mv ~/var/log/mongodb/mongod.log ./
+buildkite-agent artifact upload test-results.xml
+buildkite-agent artifact upload config.ini
+buildkite-agent artifact upload genesis.json
+buildkite-agent artifact upload ~/var/log/mongodb/mongod.log
 # ctest error handling
 [[ $EXIT_STATUS != 0 ]] && echo "Failing due to non-zero exit status from ctest: $EXIT_STATUS"; exit $EXIT_STATUS
