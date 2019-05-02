@@ -16,8 +16,6 @@ EXIT_STATUS=$?
 echo "[Uploading artifacts]"
 mv ./Testing/$(ls ./Testing/ | grep '20' | tail -n 1)/Test.xml test-results.xml
 buildkite-agent artifact upload test-results.xml
-buildkite-agent artifact upload build/config.ini
-buildkite-agent artifact upload build/genesis.json
 mv ~/var/log/mongodb/mongod.log mongod.log
 buildkite-agent artifact upload mongod.log
 # ctest error handling
