@@ -6,7 +6,8 @@ echo "[Killing old MongoDB]"
 $(pgrep mongod | xargs kill -9) || true
 echo "[Starting MongoDB]"
 PATH=$PATH:~/opt/mongodb/bin
-mongod --fork --dbpath ~/data/mongodb -f ~/etc/mongod.conf --logpath ~/var/log/mongodb/mongod.log
+# mongod --fork --dbpath ~/data/mongodb -f ~/etc/mongod.conf --logpath ~/var/log/mongodb/mongod.log
+
 # run tests
 echo "[Running tests]"
 set +e # defer ctest error handling to end
