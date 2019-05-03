@@ -150,7 +150,7 @@ steps:
         wait-network: true
     timeout: 120
 
-  - label: ":darwin: [Darwin] Mojave Tests"
+  - label: ":darwin: [Darwin] Mojave NP Tests"
     command:
       - "tar -xzf /Network/NAS/MAC_FLEET/BUILDKITE/artifacts/${ANKA_MOJAVE_TEMPLATE}-${BUILDKITE_PIPELINE_SLUG}-${BUILDKITE_BUILD_ID}.tar.gz"
       - "./scripts/serial-test.sh"
@@ -389,7 +389,7 @@ steps:
       OS: "ubuntu-16.04"
       PKGTYPE: "deb"
     timeout: 60
-    
+
   - command: | # Ubuntu 18.04 Package Builder
         echo "--- :arrow_down: Downloading build directory"
         buildkite-agent artifact download "build.tar.gz" . --step ":ubuntu: Ubuntu 18.04 Build"
