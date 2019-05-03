@@ -36,12 +36,15 @@ steps:
       chef/anka#v0.4.4:
         vm-name: $ANKA_MOJAVE_TEMPLATE
         vm-registry-tag: "${ANKA_TEMPLATE_TAG}::${MAC_TAG}"
+        modify-cpu: 12
         always-pull: true
         debug: true
         wait-network: true
     agents:
-      - "queue=mac-anka-node-fleet"
+      - "queue=mac-anka-large-node-fleet"
     timeout: 120
+
+  - block
 
   - label: ":aws: Amazon Linux 2 Build"
     command:
