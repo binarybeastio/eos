@@ -1,5 +1,6 @@
 #!/bin/bash
 set -eo pipefail
+[[ -f build.tar.gz ]] && tar -xzf build.tar.gz
 cd ./build
 echo "[Killing old MongoDB]"
 $(pgrep mongod | xargs kill -9) || true

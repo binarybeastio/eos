@@ -1,5 +1,6 @@
 #!/bin/bash
 set -eo pipefail
+[[ -f build.tar.gz ]] && tar -xzf build.tar.gz
 cd ./build
 echo "[Running tests]"
 set +e # defer ctest error handling to end

@@ -44,8 +44,6 @@ steps:
       - "queue=mac-anka-large-node-fleet"
     timeout: 120
 
-  - block
-
   - label: ":aws: Amazon Linux 2 Build"
     command:
       - "./scripts/eosio_build.sh -y -P -m"
