@@ -434,9 +434,9 @@ steps:
   - label: ":darwin: Mojave Package Builder"
     command:
       - "tar -xzf /Network/NAS/MAC_FLEET/BUILDKITE/artifacts/${ANKA_MOJAVE_TEMPLATE}-${BUILDKITE_PIPELINE_SLUG}-${BUILDKITE_BUILD_ID}.tar.gz"
-      - "cd build/packages && bash generate_package.sh brew"
-      - "buildkite-agent artifact upload build/packages/*.tar.gz"
-      - "buildkite-agent artifact upload build/packages/*.rb"
+      - "cd eos/build/packages && bash generate_package.sh brew"
+      - "cd eos && buildkite-agent artifact upload build/packages/*.tar.gz"
+      - "cd eos && buildkite-agent artifact upload build/packages/*.rb"
     agents:
       - "queue=mac-anka-node-fleet"
     plugins:
