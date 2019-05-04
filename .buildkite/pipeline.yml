@@ -156,11 +156,12 @@ steps:
       - "tar -xzf /Network/NAS/MAC_FLEET/BUILDKITE/artifacts/${ANKA_MOJAVE_TEMPLATE}-${BUILDKITE_PIPELINE_SLUG}-${BUILDKITE_BUILD_ID}.tar.gz"
       - "./scripts/serial-test.sh"
     agents:
-      - "queue=mac-anka-node-fleet"
+      - "queue=mac-anka-large-node-fleet"
     plugins:
       chef/anka#v0.4.4:
         no-volume: true
         inherit-environment-vars: true
+        modify-cpu: 12
         workdir: $WORKDIR
         bash-interactive: true
         vm-name: $ANKA_MOJAVE_TEMPLATE
