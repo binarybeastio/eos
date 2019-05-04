@@ -30,7 +30,7 @@ steps:
   - label: ":darwin: [Darwin] Mojave Build"
     command:
       - "git clone git@github.com:EOSIO/eos.git -b ${BUILDKITE_BRANCH} eos && cd eos && git submodule update --init --recursive && ./scripts/eosio_build.sh -y -P -m"
-      - "tar -pczf /Network/NAS/MAC_FLEET/BUILDKITE/artifacts/${ANKA_MOJAVE_TEMPLATE}-${BUILDKITE_PIPELINE_SLUG}-${BUILDKITE_BUILD_ID}.tar.gz *"
+      - "cd eos && tar -pczf /Network/NAS/MAC_FLEET/BUILDKITE/artifacts/${ANKA_MOJAVE_TEMPLATE}-${BUILDKITE_PIPELINE_SLUG}-${BUILDKITE_BUILD_ID}.tar.gz *"
     plugins:
       chef/anka#v0.4.4:
         no-volume: true
