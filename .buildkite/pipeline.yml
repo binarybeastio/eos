@@ -41,7 +41,7 @@ steps:
         debug: true
         wait-network: true
     agents:
-      - "queue=mac-anka-node-fleet"
+      - "queue=mac-anka-large-node-fleet"
     timeout: 120
 
   - block
