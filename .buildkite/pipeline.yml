@@ -37,12 +37,12 @@ steps:
         inherit-environment-vars: true
         vm-name: $ANKA_MOJAVE_TEMPLATE
         vm-registry-tag: "${ANKA_TEMPLATE_TAG}::${MAC_TAG}"
-        modify-cpu: 12
+        # modify-cpu: 12
         always-pull: true
         debug: true
         wait-network: true
     agents:
-      - "queue=mac-anka-large-node-fleet"
+      - "queue=mac-anka-node-fleet"
     timeout: 120
 
   - label: ":aws: Amazon Linux 2 Build"
@@ -156,12 +156,12 @@ steps:
       - "tar -xzf /Network/NAS/MAC_FLEET/BUILDKITE/artifacts/${ANKA_MOJAVE_TEMPLATE}-${BUILDKITE_PIPELINE_SLUG}-${BUILDKITE_BUILD_ID}.tar.gz"
       - "cd eos && ./scripts/serial-test.sh"
     agents:
-      - "queue=mac-anka-large-node-fleet"
+      - "queue=mac-anka-node-fleet"
     plugins:
       chef/anka#v0.4.4:
         no-volume: true
         inherit-environment-vars: true
-        modify-cpu: 12
+        # modify-cpu: 12
         bash-interactive: true
         vm-name: $ANKA_MOJAVE_TEMPLATE
         vm-registry-tag: "${ANKA_TEMPLATE_TAG}::${MAC_TAG}"
